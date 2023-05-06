@@ -1,5 +1,5 @@
 //Build the following functions in your linked list class:
-// append(value) adds a new node containing value to the end of the list
+// append(value) adds a new node containing value to the end of the list - DONE
 // prepend(value) adds a new node containing value to the start of the list
 // size returns the total number of nodes in the list
 // head returns the first node in the list
@@ -15,17 +15,28 @@
 // removeAt(index) that removes the node at the given index.
 // Extra Credit Tip: When you insert or remove a node, consider how it will affect the existing nodes. Some of the nodes will need their nextNode link updated.
 
-
-const linkedListFactory = () => {
-    return {  };
+function linkedListFactory() {
+  return {
+    nextNode: null,
+    append: function (value, node = this) {
+      if (node.nextNode === null) {
+        node.nextNode = nodeFactory(value);
+      } else {
+        this.append(value, node.nextNode);
+      }
+    },
   };
-  
-  const nodeFactory = () => {
-    return { 
-        value: null,
-        nextNode: null
-     };
+}
+
+function nodeFactory(value = null, nextNode = null) {
+  return {
+    value,
+    nextNode,
   };
+}
 
-
-
+let exampleLinkedList = linkedListFactory();
+exampleLinkedList.append();
+exampleLinkedList.append("bob");
+console.log(exampleLinkedList)
+console.log(exampleLinkedList.nextNode);
