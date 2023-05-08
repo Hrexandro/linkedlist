@@ -4,9 +4,9 @@
 // size returns the total number of nodes in the list - DONE
 // head returns the first node in the list - DONE
 // tail returns the last node in the list - DONE
-// at(index) returns the node at the given index
-// pop removes the last element from the list
-// contains(value) returns true if the passed in value is in the list and otherwise returns false.
+// at(index) returns the node at the given index - DONE
+// pop removes the last element from the list -  DONE
+// contains(value) returns true if the passed in value is in the list and otherwise returns false. - DONE
 // find(value) returns the index of the node containing value, or null if not found.
 // toString represents your LinkedList objects as strings,
 //so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
@@ -45,7 +45,32 @@ function linkedListFactory() {
       } else {
         return this.tail(node.nextNode)
       }
-    }
+    },
+    at: function(index, currentNode = this.nextNode, currentIndex = 0) {
+      if (currentNode === null){
+        return null
+      } else if (index === currentIndex){
+        return currentNode
+      } else {
+        return this.at(index, currentNode.nextNode, currentIndex + 1)
+      }
+    },
+    pop: function(node = this.nextNode){
+        if (node.nextNode.nextNode === null) {
+          node.nextNode = null
+        } else {
+          this.pop(node.nextNode)
+        }
+    },
+    contains: function (value, node = this){
+      if (node === null) {
+        return false
+      } else if (node.value === value){
+        return true
+      } else {
+        return this.contains(value, node.nextNode)
+      }
+    },
   };
 }
 
@@ -59,7 +84,6 @@ function nodeFactory(value = null, nextNode = null) {
 let exampleLinkedList = linkedListFactory();
 exampleLinkedList.append("first");
 exampleLinkedList.prepend("the new first");
-exampleLinkedList.append("3");
+exampleLinkedList.append(3);
 exampleLinkedList.append("4");
-let tail = exampleLinkedList.tail()
-console.log(tail)
+console.log(exampleLinkedList.contains("the new first"))
