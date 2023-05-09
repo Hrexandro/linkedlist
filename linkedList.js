@@ -7,9 +7,10 @@
 // at(index) returns the node at the given index - DONE
 // pop removes the last element from the list -  DONE
 // contains(value) returns true if the passed in value is in the list and otherwise returns false. - DONE
-// find(value) returns the index of the node containing value, or null if not found.
-// toString represents your LinkedList objects as strings,
-//so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null
+// find(value) returns the index of the node containing value, or null if not found. - DONE
+// toString represents your LinkedList objects as strings, - DONE
+//so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null - DONE
+
 // Extra Credit
 // insertAt(value, index) that inserts a new node with the provided value at the given index.
 // removeAt(index) that removes the node at the given index.
@@ -71,6 +72,22 @@ function linkedListFactory() {
         return this.contains(value, node.nextNode)
       }
     },
+    find: function (searchedValue, currentNode = this.nextNode, index = 0){
+        if (currentNode === null) {
+          return null
+        } else if (currentNode.value === searchedValue){
+          return index
+        } else {
+          return this.find(searchedValue, currentNode.nextNode, index + 1)
+        }
+    },
+    toString: function (currentNode = this.nextNode){
+      if (currentNode === null){
+        return currentNode
+      } else {
+        return `( ${currentNode.value} )` + " -> " + this.toString(currentNode.nextNode)
+      }
+    }
   };
 }
 
@@ -86,4 +103,4 @@ exampleLinkedList.append("first");
 exampleLinkedList.prepend("the new first");
 exampleLinkedList.append(3);
 exampleLinkedList.append("4");
-console.log(exampleLinkedList.contains("the new first"))
+console.log(exampleLinkedList.toString())
