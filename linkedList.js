@@ -1,21 +1,3 @@
-//Build the following functions in your linked list class:
-// append(value) adds a new node containing value to the end of the list - DONE
-// prepend(value) adds a new node containing value to the start of the list  - DONE
-// size returns the total number of nodes in the list - DONE
-// head returns the first node in the list - DONE
-// tail returns the last node in the list - DONE
-// at(index) returns the node at the given index - DONE
-// pop removes the last element from the list -  DONE
-// contains(value) returns true if the passed in value is in the list and otherwise returns false. - DONE
-// find(value) returns the index of the node containing value, or null if not found. - DONE
-// toString represents your LinkedList objects as strings, - DONE
-//so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> null - DONE
-
-// Extra Credit
-// insertAt(value, index) that inserts a new node with the provided value at the given index.
-// removeAt(index) that removes the node at the given index.
-// Extra Credit Tip: When you insert or remove a node, consider how it will affect the existing nodes. Some of the nodes will need their nextNode link updated.
-
 function linkedListFactory() {
   return {
     nextNode: null,
@@ -87,6 +69,22 @@ function linkedListFactory() {
       } else {
         return `( ${currentNode.value} )` + " -> " + this.toString(currentNode.nextNode)
       }
+    },
+    insertAt: function (value, index, currentNode = this, processedIndex = -1){//the processed index is the one preceeding the one where inserting is performed
+      if (index -1 === processedIndex){
+        currentNode.nextNode = nodeFactory(value, currentNode.nextNode)
+      } else {
+        this.insertAt(value, index, currentNode.nextNode, processedIndex + 1)
+      }
+    },
+    removeAt: function(index, currentNode = this, processedIndex = -1){
+      if (currentNode.nextNode === null){
+        return
+      } else if (index -1 === processedIndex){
+        currentNode.nextNode = currentNode.nextNode.nextNode
+      } else {
+        this.removeAt(index, currentNode.nextNode, processedIndex + 1)
+      }
     }
   };
 }
@@ -97,10 +95,3 @@ function nodeFactory(value = null, nextNode = null) {
     nextNode,
   };
 }
-
-let exampleLinkedList = linkedListFactory();
-exampleLinkedList.append("first");
-exampleLinkedList.prepend("the new first");
-exampleLinkedList.append(3);
-exampleLinkedList.append("4");
-console.log(exampleLinkedList.toString())
